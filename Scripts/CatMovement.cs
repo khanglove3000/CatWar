@@ -26,8 +26,14 @@ public class CatMovement : MonoBehaviour
         StopRun();
         ToAttact();
     }
+    [Button]
+    void Hit()
+    {
+        StopRun();
+        ToHit();
+    }
 
-    
+
     IEnumerator Movement()
     {
         Vector3 _temp = new Vector3();
@@ -58,6 +64,7 @@ public class CatMovement : MonoBehaviour
         }
         animator.SetFloat("speed", 0);
         animator.SetBool("attack", false);
+        animator.SetBool("hit", false);
     }
 
     public void ToAttact()
@@ -68,6 +75,16 @@ public class CatMovement : MonoBehaviour
             actionCat = null;
         }
         animator.SetBool("attack", true);
+    }
+
+    public void ToHit()
+    {
+        if (actionCat != null)
+        {
+            StopCoroutine(actionCat);
+            actionCat = null;
+        }
+        animator.SetBool("hit", true);
     }
 
 }
