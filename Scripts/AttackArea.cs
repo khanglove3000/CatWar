@@ -8,6 +8,7 @@ public class AttackArea : MonoBehaviour
     private float attackCooldown = 1f;
     public float attackRate = 2f;
     float nextAttackTime = 0f;
+    protected bool isAttack = false;
    
     [SerializeField] CatMovement myCat;
     [SerializeField] CatMovement catTarget;
@@ -31,16 +32,13 @@ public class AttackArea : MonoBehaviour
         /*check nếu cứ có collider mang tag "Cat" thì đánh*/
         if(collision.gameObject.tag == "Cat")
         {
-            //StartCoroutine(AttackAction());
-            //StartCoroutine(AttackCoroutine());
-            if(Time.time >= nextAttackTime)
-            {
-                StartCoroutine(AttackAction());
-                nextAttackTime = Time.time + 1f / attackRate;
-            }
+            
+            StartCoroutine(AttackAction());
         }
 
     }
+
+    
     private void OnTriggerExit2D(Collider2D collision)
     {
         /*Đánh đối thủ chết rồi thì dừng anim attack, move tiếp*/
@@ -48,8 +46,10 @@ public class AttackArea : MonoBehaviour
     IEnumerator AttackAction() {
         /*stop move*/
         myCat.StopRun();
+        isAttack = true;
         /*Start anim attack*/
-        Attack();
+        if(isAttack)
+            Attack();
         /*Waik anim attack finish thi*/
 
         /*số máu văng ra là bao nhiêu*/
@@ -60,7 +60,7 @@ public class AttackArea : MonoBehaviour
     {
         yield return new WaitForSeconds(attackCooldown);
     }
-    void Attack()
+   public void Attack()
     {
         if (catTarget)
             catTarget.health.Damage(damage);

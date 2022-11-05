@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,6 +76,10 @@ public class CatMovement : MonoBehaviour
             actionCat = null;
         }
         animator.SetBool("attack", true);
+        StartCoroutine(CheckAnimationCompleted(() => {
+            Debug.Log("DAME");
+
+        }));
     }
 
     public void ToHit()
@@ -86,5 +91,10 @@ public class CatMovement : MonoBehaviour
         }
         animator.SetBool("hit", true);
     }
-
+    IEnumerator CheckAnimationCompleted(Action Oncomplete)
+    {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+        if (Oncomplete != null)
+            Oncomplete();
+    }
 }
