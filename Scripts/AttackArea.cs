@@ -13,8 +13,13 @@ public class AttackArea : MonoBehaviour
     [SerializeField] CatMovement myCat;
     [SerializeField] CatMovement catTarget;
 
+    private void Update()
+    {
+        if (catTarget == null) return;
+    }
 
-  
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Cat")
@@ -62,7 +67,7 @@ public class AttackArea : MonoBehaviour
     }
    public void Attack()
     {
-        if (catTarget)
-            catTarget.health.Damage(damage);
+        //if (catTarget)
+        //    catTarget.catHealth.TakeDamage(damage);
     }
 }

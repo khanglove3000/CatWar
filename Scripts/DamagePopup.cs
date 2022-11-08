@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class DamagePopup : MonoBehaviour
 {
-    private TextMeshPro textMesh;
-    private float disappearTimer;
-    private Color textColor;
-    private Vector3 moveVector;
+    public TextMeshPro textMesh;
+    public float disappearTimer;
+    public Color textColor;
+    public Vector3 moveVector;
 
     public static DamagePopup Create(Vector3 position, int damageAmount)
     {
@@ -32,7 +32,7 @@ public class DamagePopup : MonoBehaviour
         textColor = textMesh.color;
         disappearTimer = 1f;
 
-        moveVector = new Vector3(1, 1) * 30f;
+        moveVector = new Vector3(1, 1) * 10f;
     }
 
     private void Update()
@@ -44,7 +44,7 @@ public class DamagePopup : MonoBehaviour
         {
             float disappearSpeed = 3f;
             textColor.a -= disappearSpeed * Time.deltaTime;
-            textMesh.color = textColor;
+            //textMesh.color = textColor;
             if(textColor.a < 0)
             {
                 Destroy(gameObject);

@@ -7,49 +7,28 @@ using static CatWarEnum;
 
 public class CatMovement : MonoBehaviour
 {
+
+    public CatController catController;
     [SerializeField] float _speed = 1f;
     [SerializeField] Animator animator;
-    public Health health; 
+    public SpriteRenderer spriteRenderer;
     public CatType catType;
+    public bool isEnemy = true;
 
     IEnumerator actionCat;
-    [Button] void Run() {
-        animator.SetBool("attack", false);
-        StartRun();
-    }
-    [Button] void Idle() {
-        StopRun();
-        animator.SetFloat("speed", 0);
+
+    [Button]
+    void PressToRun()
+    {
+        Run();
     }
     [Button]
-    void Attack()
+    void PressToStopRun()
     {
         StopRun();
-        ToAttact();
-    }
-    [Button]
-    void Hit()
-    {
-        StopRun();
-        ToHit();
     }
 
-
-    IEnumerator Movement()
-    {
-        Vector3 _temp = new Vector3();
-        if (catType == CatType.me) {
-            _temp = Vector3.right;
-        }
-        else
-            _temp = Vector3.left;
-        animator.SetFloat("speed", _speed);
-        while (true) {
-            transform.Translate(_temp * _speed * Time.deltaTime);
-            yield return null;
-        }
-    }
-    public void StartRun() {
+    public void Run() {
         if (actionCat != null) {
             StopCoroutine(actionCat);
             actionCat = null;
@@ -57,29 +36,47 @@ public class CatMovement : MonoBehaviour
         actionCat = Movement();
         StartCoroutine(actionCat);
     }
+
+    IEnumerator Movement()
+    {
+        Vector3 _temp = new Vector3();
+        if (catType == CatType.me && !isEnemy)
+        {
+            _temp = Vector3.right;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
+            _temp = Vector3.left;
+        }
+        animator.SetFloat("run", 1);
+  
+        while (true)
+        {
+            transform.Translate(_temp * _speed * Time.deltaTime);
+            yield return null;
+        }
+    }
+
     public void StopRun() {
         if (actionCat != null)
         {
             StopCoroutine(actionCat);
             actionCat = null;
         }
-        animator.SetFloat("speed", 0);
-        animator.SetBool("attack", false);
-        animator.SetBool("hit", false);
+        animator.SetFloat("run", -1);
+
     }
 
-    public void ToAttact()
+    public void ToAttack(int damage)
     {
         if (actionCat != null)
         {
-            StopCoroutine(actionCat);
-            actionCat = null;
+                StopCoroutine(actionCat);
+                actionCat = null;
         }
-        animator.SetBool("attack", true);
-        StartCoroutine(CheckAnimationCompleted(() => {
-            Debug.Log("DAME");
-
-        }));
+        animator.SetTrigger("Attack");
+        catController.CatHealth.TakeDamage(damage);
     }
 
     public void ToHit()
@@ -89,12 +86,6 @@ public class CatMovement : MonoBehaviour
             StopCoroutine(actionCat);
             actionCat = null;
         }
-        animator.SetBool("hit", true);
-    }
-    IEnumerator CheckAnimationCompleted(Action Oncomplete)
-    {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
-        if (Oncomplete != null)
-            Oncomplete();
+        //animator.SetBool("hit", true);
     }
 }
