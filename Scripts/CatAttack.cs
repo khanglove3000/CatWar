@@ -14,22 +14,22 @@ public class CatAttack: MonoBehaviour
     {
         if (catTarget)
         {
-            catController.catMovement.StopRun();
+            //catController.catMovement.StopRun();
         }
         else
         {
-            catController.catMovement.Run();
+            //catController.catMovement.Run();
         }
     }
     
     void Attack()
     {
-        catController.catMovement.ToAttack(attackDamage);
+        //catController.catMovement.ToAttack(attackDamage);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Cat" && !catController.catMovement.isEnemy)
+        //if (collision.gameObject.tag == "Cat" && !catController.catMovement.isEnemy)
         {
             // cần chỉnh lại
             catTarget = collision.gameObject.GetComponent<CatMovement>();
@@ -42,7 +42,7 @@ public class CatAttack: MonoBehaviour
 
         }
 
-        if (collision.gameObject.tag == "Enemy" && catController.catMovement.isEnemy)
+        //if (collision.gameObject.tag == "Enemy" && catController.catMovement.isEnemy)
         {
             catTarget = collision.gameObject.GetComponent<CatMovement>();
            

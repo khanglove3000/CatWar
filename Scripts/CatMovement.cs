@@ -76,7 +76,7 @@ public class CatMovement : MonoBehaviour
                 actionCat = null;
         }
         animator.SetTrigger("Attack");
-        catController.CatHealth.TakeDamage(damage);
+        //catController.CatHealth.TakeDamage(damage);
     }
 
     public void ToHit()
