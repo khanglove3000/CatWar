@@ -38,11 +38,4 @@ public class CatHealth : MonoBehaviour
         isDead = true;
         Destroy(gameObject);
     }
-
-    //IEnumerator WaikForIdle()
-    //{
-    //    yield return new WaitForSeconds(0.5f);
-       
-    //}
-
 }
