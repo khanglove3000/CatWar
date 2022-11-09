@@ -10,8 +10,8 @@ public class AttackArea : MonoBehaviour
     float nextAttackTime = 0f;
     protected bool isAttack = false;
    
-    [SerializeField] CatMovement myCat;
-    [SerializeField] CatMovement catTarget;
+    [SerializeField] CatController myCat;
+    [SerializeField] CatController catTarget;
 
     private void Update()
     {
@@ -25,7 +25,7 @@ public class AttackArea : MonoBehaviour
         if (collision.gameObject.tag == "Cat")
         {
             // cần chỉnh lại
-            catTarget = collision.gameObject.GetComponent<CatMovement>();
+            //catTarget = collision.gameObject.GetComponent<CatMovement>();
             // Tạo class character để cho những class con kế thừa
             // thay đổi tag thành character
 
