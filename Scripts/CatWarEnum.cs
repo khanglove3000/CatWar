@@ -6,7 +6,7 @@ public class CatWarEnum
 {
    public enum CatType
     {
-        player,
-        me
+        Player,
+        Me
     }
 }

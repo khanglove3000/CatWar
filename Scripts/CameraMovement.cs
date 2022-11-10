@@ -39,7 +39,6 @@ public class CameraMovement : MonoBehaviour
 
         }
     }
-
     private Vector3 ClampCamera(Vector3 targetPosition, Transform posY)
     {
         float camHeight = cam.orthographicSize;
